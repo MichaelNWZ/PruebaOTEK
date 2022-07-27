@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PruebaOTekDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Apellido" Type="varchar" MaxLength="100" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="ID_Empresa" Type="int" />
+        </EntityType>
+        <EntityType Name="ClientesDireccionesRelacion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Clientes" Type="int" />
+          <Property Name="ID_Direcciones" Type="int" />
+        </EntityType>
+        <EntityType Name="Direcciones">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Empresa" Type="varchar" MaxLength="300" />
+          <Property Name="RNC" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Clientes__ID_Emp__3A81B327">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="ID_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientesD__ID_Cl__3D5E1FD2">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="ClientesDireccionesRelacion" Type="Self.ClientesDireccionesRelacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientesDireccionesRelacion">
+              <PropertyRef Name="ID_Clientes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientesD__ID_Di__3E52440B">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="0..1" />
+          <End Role="ClientesDireccionesRelacion" Type="Self.ClientesDireccionesRelacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientesDireccionesRelacion">
+              <PropertyRef Name="ID_Direcciones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaOTekDBModelStoreContainer">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientesDireccionesRelacion" EntityType="Self.ClientesDireccionesRelacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direcciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Clientes__ID_Emp__3A81B327" Association="Self.FK__Clientes__ID_Emp__3A81B327">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientesD__ID_Cl__3D5E1FD2" Association="Self.FK__ClientesD__ID_Cl__3D5E1FD2">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="ClientesDireccionesRelacion" EntitySet="ClientesDireccionesRelacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientesD__ID_Di__3E52440B" Association="Self.FK__ClientesD__ID_Di__3E52440B">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="ClientesDireccionesRelacion" EntitySet="ClientesDireccionesRelacion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PruebaOTekDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Empresa" Type="Int32" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK__Clientes__ID_Emp__3A81B327" FromRole="Clientes" ToRole="Empresa" />
+          <NavigationProperty Name="ClientesDireccionesRelacions" Relationship="Self.FK__ClientesD__ID_Cl__3D5E1FD2" FromRole="Clientes" ToRole="ClientesDireccionesRelacion" />
+        </EntityType>
+        <EntityType Name="ClientesDireccionesRelacion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Clientes" Type="Int32" />
+          <Property Name="ID_Direcciones" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__ClientesD__ID_Cl__3D5E1FD2" FromRole="ClientesDireccionesRelacion" ToRole="Clientes" />
+          <NavigationProperty Name="Direccione" Relationship="Self.FK__ClientesD__ID_Di__3E52440B" FromRole="ClientesDireccionesRelacion" ToRole="Direcciones" />
+        </EntityType>
+        <EntityType Name="Direccione">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ClientesDireccionesRelacions" Relationship="Self.FK__ClientesD__ID_Di__3E52440B" FromRole="Direcciones" ToRole="ClientesDireccionesRelacion" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Empresa" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RNC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK__Clientes__ID_Emp__3A81B327" FromRole="Empresa" ToRole="Clientes" />
+        </EntityType>
+        <Association Name="FK__Clientes__ID_Emp__3A81B327">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Clientes" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="ID_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientesD__ID_Cl__3D5E1FD2">
+          <End Role="Clientes" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="ClientesDireccionesRelacion" Type="Self.ClientesDireccionesRelacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientesDireccionesRelacion">
+              <PropertyRef Name="ID_Clientes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ClientesD__ID_Di__3E52440B">
+          <End Role="Direcciones" Type="Self.Direccione" Multiplicity="0..1" />
+          <End Role="ClientesDireccionesRelacion" Type="Self.ClientesDireccionesRelacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientesDireccionesRelacion">
+              <PropertyRef Name="ID_Direcciones" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaOTekDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="ClientesDireccionesRelacions" EntityType="Self.ClientesDireccionesRelacion" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direccione" />
+          <EntitySet Name="Empresas" EntityType="Self.Empresa" />
+          <AssociationSet Name="FK__Clientes__ID_Emp__3A81B327" Association="Self.FK__Clientes__ID_Emp__3A81B327">
+            <End Role="Empresa" EntitySet="Empresas" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientesD__ID_Cl__3D5E1FD2" Association="Self.FK__ClientesD__ID_Cl__3D5E1FD2">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="ClientesDireccionesRelacion" EntitySet="ClientesDireccionesRelacions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ClientesD__ID_Di__3E52440B" Association="Self.FK__ClientesD__ID_Di__3E52440B">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="ClientesDireccionesRelacion" EntitySet="ClientesDireccionesRelacions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PruebaOTekDBModelStoreContainer" CdmEntityContainer="PruebaOTekDBEntities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="PruebaOTekDBModel.Cliente">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID_Empresa" ColumnName="ID_Empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientesDireccionesRelacions">
+            <EntityTypeMapping TypeName="PruebaOTekDBModel.ClientesDireccionesRelacion">
+              <MappingFragment StoreEntitySet="ClientesDireccionesRelacion">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_Clientes" ColumnName="ID_Clientes" />
+                <ScalarProperty Name="ID_Direcciones" ColumnName="ID_Direcciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Direcciones">
+            <EntityTypeMapping TypeName="PruebaOTekDBModel.Direccione">
+              <MappingFragment StoreEntitySet="Direcciones">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresas">
+            <EntityTypeMapping TypeName="PruebaOTekDBModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre_Empresa" ColumnName="Nombre_Empresa" />
+                <ScalarProperty Name="RNC" ColumnName="RNC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
